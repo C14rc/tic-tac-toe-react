@@ -1,38 +1,63 @@
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 
-const Title = () => {
-  return (<div>
-    Press R to restart
-  </div>)
-}
 
-const onButtonClick = (index, buttonValues) => {
-
-}
-
-const Button = (props) => {
-  return (
-    <button onClick={() => onButtonClick(props.index, props.buttonValues)} className={props.className}>
-      {props.data}
-    </button>
-  )
-}
-
-const Buttons = (props) => {
-  return (
-    <div className='button-container'>
-      {props.buttonValues.map((buttonValue, index) => <Button className={'button-' + (index + 1)} index={index} buttonValues={props.buttonValues} />)}
-
-    </div>
-  )
-}
 function App() {
-  var buttonValues = ['', '', '', '', '', '', '', '', '']
+  const [buttonValues, setButtonValues] = useState(['', '', '', '', '', '', '', '', ''])
+  const [currentPlayer, setCurrentPlayer] = useState('x')
+
+
+  const onKeyPress = useCallback((event) => {
+    if (event.key === 'R' || event.key === 'r') {
+      setButtonValues(['', '', '', '', '', '', '', '', ''])
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyPress, false)
+  }, [onKeyPress])
+
+
+
+
+
+  const onButtonClick = (index) => {
+    if (buttonValues[index] === '') {
+      buttonValues[index] = currentPlayer
+      currentPlayer === 'x' ? setCurrentPlayer('o') : setCurrentPlayer('x')
+    } else {
+      alert('invalid move')
+    }
+  }
+
+  const Title = () => <div>Press R to restart</div>
+
+  const CurretPlayer = () => {
+    return <div>CurretPlayer : {currentPlayer}</div>
+  }
+
+  const Button = (props) => {
+    return (
+      <button onClick={() => onButtonClick(props.index)} className={props.className}>
+        {buttonValues[props.index]}
+      </button>
+    )
+  }
+
+  const Buttons = () => {
+    return (
+      <div className='button-container'>
+        {buttonValues.map((_, index) => <Button key={'button-' + index} className={'button-' + (index + 1)} index={index} />)}
+      </div>
+    )
+  }
+
   return (
     <div>
       Tic Tac Toe
       <Title />
-      <Buttons buttonValues={buttonValues} />
+      <CurretPlayer />
+      <Buttons />
     </div>
 
   );
