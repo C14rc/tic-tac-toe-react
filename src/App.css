@@ -14,5 +14,12 @@
 .button-8,
 .button-9 {
   margin: 5px;
-  background-color: white;
+  background-color: rgb(0, 0, 0);
+  font-size: xx-large;
+  color: orange;
+  box-shadow: 0 8px 16px 0 rgba(235, 120, 49, 0.2), 0 6px 20px 0 rgba(187, 101, 10, 0.638);
+  transition: 0.3s;
+  opacity: 1;
 }
+.button-1:hover {opacity: 0.8}
+
